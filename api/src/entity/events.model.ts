@@ -12,7 +12,6 @@ import {
   IsDate,
 } from 'class-validator';
 
-
 @Entity()
 export class Event {
   @PrimaryGeneratedColumn()

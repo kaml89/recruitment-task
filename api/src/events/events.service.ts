@@ -6,6 +6,7 @@ import {IEvent} from './events.interface';
 class EventsService {
 
   async getAllEvents(): Promise<any> {
+    // const events = await AppDataSource.manager.find(Event);
     const events = await AppDataSource.manager.find(Event);
     return events;
   }
@@ -18,7 +19,6 @@ class EventsService {
     event.date = eventInput.date;
 
     await AppDataSource.manager.save(event);
-    console.log(typeof AppDataSource.manager.save(event));
     return event;
   }
 }

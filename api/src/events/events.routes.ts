@@ -16,10 +16,10 @@ export class EventsRoutes extends CommonRoutesConfig {
       .route(`/events`)
         .get(EventsController.getEvents)
         .post(
-          body('firstName').isString(),
-          body('lastName').isString(),
+          body('firstName').isString().notEmpty().withMessage('Must be non-empty string'),
+          body('lastName').isString().notEmpty().withMessage('Must be non-empty string'),
           body('email').isEmail().withMessage('Must be valid email'),
-          body('date').isISO8601().withMessage('Must be valid date').toDate(),
+          body('date').isISO8601().withMessage('Must be valid date'),
 
           BodyValidationMiddleware.verifyBodyFieldsErrors,
           EventsMiddleware.validateDate,

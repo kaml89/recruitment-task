@@ -1,6 +1,6 @@
 import styles from './index.module.css';
-import AddEventForm from '../../components/AddEventForm/AddEventForm';
-import EventsList from '../EventsList/EventsList';
+import AddEventForm from '../../components/features/events/add-event-form/AddEventForm';
+import EventsList from '../events-list/EventsList';
 
 const AddEvent = () => {
   return (

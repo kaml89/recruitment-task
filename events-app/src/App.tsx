@@ -1,4 +1,4 @@
-import AddEvent from "./pages/AddEvent/AddEvent"
+import AddEvent from "./pages/add-event/AddEvent"
 
 function App() {
 
