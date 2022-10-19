@@ -1,23 +1,53 @@
-
-import React from 'react'
 import AddEventForm from './AddEventForm'
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { act } from 'react-dom/test-utils';
+// import { jest} from '@jest/globals'
 
 describe("Test add event form", () => {
 
-  describe("with valid input", () => {
-    it('should render success message', async () => {
-      
-    }) 
-  })
+  /* I have run into error "jest is undefined" when trying to call jest.fn() 
+     I tried to import jest from @jest/globals i got "Error: Do not import `@jest/globals` outside of the Jest test environment"
+  */
 
-  describe("with invalid first name", () => {
+  // describe("with valid input", () => {
+  //   it('should render success message', async () => {
+  //     const mockOnSubmit = jest.fn();  
+  //     const date = new Date();
+  //     const dateInputText = `${date.getMonth() + 1}/${date.getDate() + 1}/${date.getFullYear()}`;
+  //     const { getByPlaceholderText, getByRole, container } = render(<AddEventForm onSubmit={mockOnSubmit} loading={false}/>);
+
+  //     await act(async () => {
+  //       const firstNameInput = getByPlaceholderText("First name");
+  //       const lastNameInput = getByPlaceholderText("Last name");
+  //       const emailInput = getByPlaceholderText('Email');
+  //       const dateInput = getByPlaceholderText("Select date");
+        
+  //       firstNameInput && fireEvent.change(firstNameInput, {target: {value: "jan"}});
+  //       lastNameInput && fireEvent.change(lastNameInput, {target: {value: "kowalski"}});
+  //       emailInput && fireEvent.change(emailInput, {target: {value: "abc@blabla.com"}});
+
+  //       dateInput && fireEvent.change(dateInput, {target: {value: dateInputText}});
+        
+  //     })
+
+  //     await act(async () => {
+  //       const button = getByRole('button');
+  //       fireEvent.click(button);
+  //     })
+
+  //     expect(mockOnSubmit).toHaveBeenCalled();
+
+  //   }) 
+  // })
+
+  describe("with invalid input", () => {
     it("should render firstName validation message", async () => {
-      const {getByLabelText, getByPlaceholderText, getByRole, container} = render(<AddEventForm />)
+      // const mockOnSubmit = jest.fn();
+      const func = () => {};
+      const { getByPlaceholderText, getByRole, container } = render(<AddEventForm onSubmit={func} loading={false}/>);
       await act(async () => {
-        const firstNameInput = screen.queryByPlaceholderText(/First name/i)
-        // const firstNameInput = getByPlaceholderText("First name *");
+        // const firstNameInput = screen.queryByPlaceholderText(/First name/i)
+        const firstNameInput = getByPlaceholderText("First name");
         const button = getByRole('button');
         firstNameInput && fireEvent.change(firstNameInput, {target: {value: ""}})
         fireEvent.click(button)
@@ -26,118 +56,59 @@ describe("Test add event form", () => {
       expect(container.innerHTML).toMatch("First name is required")
     })
 
-    it("renders the lastName validation message", async () => {
-      const {getByLabelText, getByPlaceholderText, getByRole, container} = render(<AddEventForm />)
+    it("should render lastName validation message", async () => {
+      // const mockOnSubmit = jest.fn();
+      const func = () => {};
+      const { getByPlaceholderText, getByRole, container } = render(<AddEventForm onSubmit={func} loading={false}/>);
       await act(async () => {
-        const lastNameInput = screen.queryByPlaceholderText(/Last name/i)
-        // const firstNameInput = getByPlaceholderText("First name *");
+        const lastNameInput = getByPlaceholderText("Last name");
         const button = getByRole('button');
-        lastNameInput && fireEvent.change(lastNameInput, {target: {value: ""}})
-        fireEvent.click(button)
+        lastNameInput && fireEvent.change(lastNameInput, {target: {value: ""}});
+        fireEvent.click(button);
       })
 
       expect(container.innerHTML).toMatch("Last name is required")
     })
-  })
 
-  describe("with invalid last name", () => {
-    
-  })
-
-  describe("with invalid email name", () => {
-    it("renders the email validation message", async () => {
-      const {getByLabelText, getByPlaceholderText, getByRole, container} = render(<AddEventForm />)
+    it("should render email validation message", async () => {
+      // const mockOnSubmit = jest.fn();
+      const func = () => {};
+      const { getByPlaceholderText, getByRole, container } = render(<AddEventForm onSubmit={func} loading={false}/>);
       await act(async () => {
-        const emailInput = screen.queryByPlaceholderText(/Email/i)
-        // const firstNameInput = getByPlaceholderText("First name *");
+        const emailInput = getByPlaceholderText('Email');
         const button = getByRole('button');
-        emailInput && fireEvent.change(emailInput, {target: {value: "abc@blabla"}})
-        fireEvent.click(button)
+        emailInput && fireEvent.change(emailInput, {target: {value: "abc@blabla"}});
+        fireEvent.click(button);
       })
 
       expect(container.innerHTML).toMatch("Invalid email")
     })
-  })
 
-  describe("with invalid email name", () => {
-    it("renders the email validation message", async () => {
-      const {getByLabelText, getByPlaceholderText, getByRole, container} = render(<AddEventForm />)
+    it("should render date validation message", async () => {
+      // const mockOnSubmit = jest.fn();
+      const func = () => {};
+      const { getByRole, container } = render(<AddEventForm onSubmit={func} loading={false}/>);
       await act(async () => {
-        const emailInput = screen.queryByPlaceholderText(/Email/i)
-        // const firstNameInput = getByPlaceholderText("First name *");
-        const button = getByRole('button');
-        emailInput && fireEvent.change(emailInput, {target: {value: "abc@blabla"}})
-        fireEvent.click(button)
-      })
 
-      expect(container.innerHTML).toMatch("Invalid email")
-    })
-  })
-
-  describe("with invalid date", () => {
-    it("display date-picker components", async () => {
-      const {getByLabelText, getByPlaceholderText, getByRole,getByText, container} = render(<AddEventForm />)
-      await act(async () => {
-        const dateInput = screen.queryByPlaceholderText(/Select date/i);
-        
         const button = getByRole('button');
-        dateInput && fireEvent.change(dateInput, {target: {value: '10/13/2025'}})
-        fireEvent.click(button)
+        fireEvent.click(button);
 
       })
-
-      const dateInput = await screen.queryByPlaceholderText(/Select date/i) as HTMLInputElement;
-      expect(dateInput.value).toBe('10/13/2025');
-    })
-
-    it("displays error message when date is not selected", async () => {
-      const {getByLabelText, getByPlaceholderText, getByRole,getByText, container} = render(<AddEventForm />)
-      await act(async () => {
-        const dateInput = screen.queryByPlaceholderText(/Select date/i);
-        
-        const button = getByRole('button');
-        // dateInput && fireEvent.change(dateInput, {target: {value: '10/13/2025'}})
-        fireEvent.click(button)
-
-      })
-
-      // const dateInput = await screen.queryByPlaceholderText(/Select date/i) as HTMLInputElement;
       expect(container.innerHTML).toMatch('Date is required');
-    })
-
-    it("displays error message when selected past date", async () => {
-      const {getByLabelText, getByPlaceholderText, getByRole,getByText, container} = render(<AddEventForm />)
-      await act(async () => {
-        const dateInput = screen.queryByPlaceholderText(/Select date/i);
-
-        const button = getByRole('button');
-        dateInput && fireEvent.change(dateInput, {target: {value: '10/10/2022'}})
-        const dateInput2 = screen.queryByPlaceholderText(/First name/i);
-        fireEvent.click(button)
-        
-      })
-
-      const now = new Date();
-      const currentDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`
-      const dateInput = await screen.queryByPlaceholderText(/Select date/i) as HTMLInputElement;
-      // expect(dateInput.value).toBe(currentDate);
-      expect(container.innerHTML).toMatch('Please choose future date')
+      
     })
   })
 
+  describe("loading props set to true", () => {
+    it("should display loading", async () => {
+      // const mockOnSubmit = jest.fn();
+      const func = () => {};
+      const { container, rerender } = render(<AddEventForm onSubmit={func} loading={false}/>);
+      expect(container.innerHTML).toMatch('Submit');
+      rerender(<AddEventForm onSubmit={func} loading={true}/>);
+      expect(container.innerHTML).toMatch('Loading');
 
-  // describe("with invalid password", () => {
-  //   it("renders the password validation error", async () => {
-  //     const {getByLabelText, container} = render(<SignIn />)
+    })
+  })
 
-  //     await act(async () => {
-  //       const paswordInput = getByLabelText("Password *")
-  //       fireEvent.change(paswordInput, {target: {value: "123"}})
-  //       fireEvent.blur(paswordInput)
-  //     })
-
-  //     expect(container.innerHTML).toMatch("Password should be longer than 6 characters")
-
-  //   })
-  // })
 })
