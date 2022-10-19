@@ -2,11 +2,9 @@ import { AppDataSource } from "../data-source";
 import { Event } from '../entity/events.model';
 import {IEvent} from './events.interface';
 
-
 class EventsService {
 
   async getAllEvents(): Promise<any> {
-    // const events = await AppDataSource.manager.find(Event);
     const events = await AppDataSource.manager.find(Event);
     return events;
   }

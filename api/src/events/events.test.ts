@@ -1,10 +1,5 @@
-
 import "reflect-metadata";
 import EventsService from './events.service';
-import { TestHelper } from '../test-helper';
-import { DataSource } from 'typeorm';
-import { AppDataSource } from '../data-source'
-import sqlite3 from 'sqlite3';
 import supertest from 'supertest';
 import app from '../index';
 import DbService from '../common/db.config';
@@ -20,15 +15,11 @@ let request: supertest.SuperAgentTest;
 
 beforeAll(async () => {
   await DbService.connect();
-  // AppDataSource.manager.clear(Event);
-  EventsService.addEvent(validEvent);
-  
-  
+  EventsService.addEvent(validEvent); 
   request = supertest.agent(app);
 });
 
 afterAll(() => {
-    // TestHelper.instance.teardownTestDB();
 });
 
 describe('Events endpoints', () => {
