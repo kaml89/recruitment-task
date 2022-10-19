@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { Controller, useForm, FieldValues } from "react-hook-form";
+import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import DatePicker from 'react-datepicker';
 import * as yup from "yup";
-import { EventsService } from "../../../../services/events";
 import styles from './index.module.css';
 import Button from '../../../core/form/button/Button';
 
@@ -12,6 +10,11 @@ interface IFormInputs {
   lastName: string;
   email: string;
   date: Date;
+}
+
+interface AddEventFormProps {
+  onSubmit: SubmitHandler<IFormInputs>;
+  loading: boolean;
 }
 
 const schema = yup.object({
@@ -28,35 +31,21 @@ const schema = yup.object({
   date: yup
     .date()
     .required("Date is required")
-    .min(new Date(),'Please choose future date'),
+    .min(new Date(),'Cannot pick past dates'),
 }).required();
 
-const AddEventForm = () => {
+const AddEventForm = ({ onSubmit, loading }: AddEventFormProps) => {
 
-  const [ loading, setLoading ] = useState<boolean>(false);
   const { control, register, handleSubmit, formState: { errors } } = useForm<IFormInputs>({
     resolver: yupResolver(schema)
   });
-  const onSubmit = async (data: IFormInputs) => {
-    try {
-
-      setLoading(true);
-      const response = await EventsService.create(data);
-      console.log(response)
-      setLoading(false);
-
-    } catch(error: any) {
-      alert(JSON.stringify(error.response.data.errors))
-      setLoading(false);
-    }
-  }
 
   return (
     <form 
       className={styles.form} 
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h2>Add event form</h2>
+      <h2>Add event</h2>
       <input 
         placeholder="First name"
         className={styles.input} 
@@ -84,14 +73,12 @@ const AddEventForm = () => {
       </p>
 
       <div className={styles.dateInput}>
-        <Controller
-        
+        <Controller 
           control={control}
           name="date"
           render={({field}) => {
             return (
               <DatePicker
-                
                 minDate={new Date()}
                 customInput={<input className={styles.input}/>}
                 onChange={(date) => field.onChange(date)}
