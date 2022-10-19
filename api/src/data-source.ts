@@ -1,4 +1,3 @@
-
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Event } from "./entity/events.model";
@@ -8,7 +7,7 @@ let AppDataSource: DataSource;
 if (process.env.NODE_ENV === 'development') {
   AppDataSource = new DataSource({
     type: "sqlite",
-    database: "./test.db",
+    database: "./data.db",
     synchronize: true,
     entities: [Event],
     subscribers: [],
