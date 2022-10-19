@@ -24,7 +24,7 @@ VITE_API_URL=http://localhost:3000
 ```
 npm run dev
 ```
-2.In events-app directory:
+2. In events-app directory:
 ```
 npm run dev
 ```
