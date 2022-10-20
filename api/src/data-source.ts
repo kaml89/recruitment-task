@@ -2,27 +2,16 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Event } from "./entity/events.model";
 
-let AppDataSource: DataSource;
+const database = process.env.NODE_ENV === 'test' ? ":memory:" : './data.db';
 
-if (process.env.NODE_ENV === 'development') {
-  AppDataSource = new DataSource({
+const AppDataSource = new DataSource({
     type: "sqlite",
-    database: "./data.db",
+    database: database,
     synchronize: true,
     entities: [Event],
     subscribers: [],
     migrations: [],
   })
-} else {
-  AppDataSource = new DataSource({
-    type: "sqlite",
-    database: ":memory:",
-    synchronize: true,
-    entities: [Event],
-    subscribers: [],
-    migrations: [],
-  })
-}
 
 const getDataSource = (delay = 3000): Promise<DataSource> => {
   if (AppDataSource.isInitialized) return Promise.resolve(AppDataSource);
